@@ -6,28 +6,40 @@
  * To change this template use File | Settings | File Templates.
  */
 
+var DEFAULT_URL = 'assets/images/productNotAvailable.jpg';
+
 
 $(document).ready(function () {
+
     $("#loadb").click(doOnClick);
 
     var id = '';
+    var imageArray = [];
+    var imageIndex = 0;
+    var formed_url = '';
+
+    var subreddit = 'pics';
+
+    formed_url = "http://www.reddit.com/r/" + subreddit + "/.json?limit=15&after=" + id + "&jsonp=?&callback=?";
+    ajaxCall(formed_url);
+
 
     function doOnClick()
     {
-
-        var formed_url = '';
-        formed_url = "http://www.reddit.com/r/pics/.json?limit=1&after=" + id + "&jsonp=?&callback=?";
-        ajaxCall(formed_url);
+        imageIndex++;
+        console.dir(imageArray[imageIndex].data.url);
+        $("#currentImage").attr("src", imageArray[imageIndex].data.url);
     }
 
     function ajaxCall(formed_url) {
 
-        $.ajax({
+        var xhr = $.ajax({
             type:"GET",
             url: formed_url,
             dataType:"json",
             success: function(data) {
                 picsCallback(data);
+
             },
             cache:false
         });
@@ -35,11 +47,40 @@ $(document).ready(function () {
 
     function picsCallback(data) {
         $.each(data.data.children, function(i,item){
-            $("<img/>").attr("src", item.data.url).prependTo("#images");
-           // id = item.data.name;
+            imageArray[i] = data.data.children[i];
+            purifyUrl(imageArray[i]);
         });
 
+        $("<img/>").attr({
+            src: imageArray[0].data.url,
+            id: "currentImage"
+        }).prependTo("#images");
+
         id = data.data.children[data.data.children.length-1].data.name;
+    }
+
+    function purifyUrl(childObject)
+    {
+
+        // imgur
+        // qkme.me
+
+        var impureUrl = childObject.data.url;
+        console.dir(impureUrl);
+        var extension = impureUrl.substr(impureUrl.lastIndexOf('.') + 1);
+        console.dir(extension);
+
+        switch(extension){
+            case 'jpg':
+            case 'png':
+            case 'gif':
+            break;
+
+            default:
+                childObject.data.url = DEFAULT_URL;
+                console.log("enterd here!");
+
+        }
     }
 
 });
