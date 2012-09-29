@@ -1,0 +1,24 @@
+
+
+
+#outer{
+    padding-top: 40px;
+}
+
+
+#images{
+    position: relative;
+    max-width: 600px;
+    max-height: 400px;
+    margin: 0 auto;
+}
+
+
+
+#images img{
+    height: auto;
+    max-width: 100%;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    margin: 0 auto;
+}

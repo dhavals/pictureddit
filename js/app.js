@@ -16,7 +16,7 @@ $(document).ready(function () {
     {
 
         var formed_url = '';
-        formed_url = "http://www.reddit.com/r/pics/.json?limit=3&after=" + id + "&jsonp=?&callback=?";
+        formed_url = "http://www.reddit.com/r/pics/.json?limit=1&after=" + id + "&jsonp=?&callback=?";
         ajaxCall(formed_url);
     }
 
@@ -35,7 +35,7 @@ $(document).ready(function () {
 
     function picsCallback(data) {
         $.each(data.data.children, function(i,item){
-            $("<img/>").attr("src", item.data.url).appendTo("#images");
+            $("<img/>").attr("src", item.data.url).prependTo("#images");
            // id = item.data.name;
         });
 
