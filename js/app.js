@@ -31,8 +31,18 @@ $(document).ready(function () {
 
     ajaxCall(formed_url, true);
 
-    $("#prevbutton").click(doOnPrevClick);
-    $("#nextbutton").click(doOnNextClick);
+//    $("#prevbutton").click(doOnPrevClick);
+//    $("#nextbutton").click(doOnNextClick);
+
+    $(document).keydown(function (e) {
+        if (e.keyCode == 37) { // left
+            doOnPrevClick();
+        }
+        else if (e.keyCode == 39) { // right
+             doOnNextClick();
+        }
+    });
+
 
     function createUrl(subreddit, idBefore, idAfter, limit) {
         return "http://www.reddit.com/r/" + subreddit + "/.json?limit=" + limit
@@ -52,7 +62,6 @@ $(document).ready(function () {
             ajaxCall(createUrl(subreddit, idBefore, "", DEFAULT_LIMIT), false);
         }
         $("#currentImage").attr("src", imageStore.currentArray[imageStore.imageIndex].data.url);
-        console.log(imageStore.currentArray[imageStore.imageIndex]);
     }
 
     function doOnNextClick() {
@@ -86,7 +95,7 @@ $(document).ready(function () {
     function picsCallback(data, seekNext) {
 
         $.each(data.data.children, function (i, item) {
-            imageBuffer[i] = data.data.children[i];
+            imageBuffer[i] = item;
             purifyUrl(imageBuffer[i]);
         });
 
@@ -103,7 +112,7 @@ $(document).ready(function () {
             var idAfter = imageStore.currentArray[imageStore.currentArray.length - 1].data.name;
             ajaxCall(createUrl(subreddit, "", idAfter, DEFAULT_LIMIT), true);
         }
-        else{
+        else {
             if (seekNext) // forwards
                 imageStore.nextArray = imageBuffer.slice(0);
             else // backwards
@@ -113,8 +122,12 @@ $(document).ready(function () {
 
     function purifyUrl(childObject) {
 
-        // imgur
-        // qkme.me
+        var imgurAlbumRegex = /http:\/\/imgur.com\/a\//;
+        var getUrl = '';
+        // anything that doesn't have a /a/ in it for an album, basically.
+        var imgurSingleRegex = /http:\/\/imgur.com\/.[^\/]/;
+        var imgurAlbumId;
+        var imgurId;
 
         var impureUrl = childObject.data.url;
         var extension = impureUrl.substr(impureUrl.lastIndexOf('.') + 1);
@@ -123,11 +136,31 @@ $(document).ready(function () {
             case 'jpg':
             case 'png':
             case 'gif':
-                break;
-
-            default:
-                childObject.data.url = DEFAULT_URL;
+                return;
         }
+
+        // at this point, we know that it doesn't end in a .extension that we know.
+
+        if (impureUrl.match(imgurAlbumRegex)) {
+            imgurAlbumId = impureUrl.substr(impureUrl.lastIndexOf('/a/') + 3);
+            getUrl = 'http://api.imgur.com/2/album/' + imgurAlbumId + '.json';
+
+            $.getJSON(getUrl, function (data) {
+                childObject.data.url = data.album.images[0].links.original;
+            });
+        }
+        else if (impureUrl.match(imgurSingleRegex)) {
+            imgurId = impureUrl.substr(impureUrl.lastIndexOf('/') + 1);
+            getUrl = 'http://api.imgur.com/2/image/' + imgurId + '.json';
+
+            $.getJSON(getUrl, function (data) {
+                childObject.data.url = data.image.links.original;
+            });
+        }
+        else {
+            childObject.data.url = DEFAULT_URL;
+        }
+
     }
 
 });
