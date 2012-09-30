@@ -63,8 +63,8 @@ $(document).ready(function () {
         }
         $("#currentImage").attr("src", imageStore.currentArray[imageStore.imageIndex].data.url);
         $("#titleHeader").text(imageStore.currentArray[imageStore.imageIndex].data.title);
-        $("#images a").attr('href', '"http://www.reddit.com' +
-            imageStore.currentArray[imageStore.imageIndex].data.permalink + '"></a>');
+        $("#images a").attr('href', 'http://www.reddit.com' +
+            imageStore.currentArray[imageStore.imageIndex].data.permalink);
         $('#commentPara').text(imageStore.currentArray[imageStore.imageIndex].data.topComment);
     }
 
@@ -81,8 +81,8 @@ $(document).ready(function () {
         }
         $("#currentImage").attr("src", imageStore.currentArray[imageStore.imageIndex].data.url);
         $("#titleHeader").text(imageStore.currentArray[imageStore.imageIndex].data.title);
-        $('#images a').attr('href', '"http://www.reddit.com' +
-            imageStore.currentArray[imageStore.imageIndex].data.permalink + '"></a>');
+        $('#images a').attr('href', 'http://www.reddit.com' +
+            imageStore.currentArray[imageStore.imageIndex].data.permalink);
         $('#commentPara').text(imageStore.currentArray[imageStore.imageIndex].data.topComment);
     }
 
