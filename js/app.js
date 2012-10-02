@@ -20,11 +20,12 @@ function ImageStore(index) {
 $(document).ready(function () {
 
 
-    var imageStore = new ImageStore(0);
+    var store = new ImageStore(0);
     var imageBuffer = [];
     var firstId = null;
 
     var needsInit = true;
+    var isFirstComment = true;
 
     var subreddit = 'pics';
     var formed_url = createUrl(subreddit, "", "", DEFAULT_LIMIT);
@@ -50,40 +51,40 @@ $(document).ready(function () {
     }
 
     function doOnPrevClick() {
-        if (firstId === imageStore.currentArray[0].data.name && imageStore.imageIndex === 0)
+        if (firstId === store.currentArray[0].data.name && store.imageIndex === 0)
             return;
 
-        imageStore.imageIndex--;
-        if (imageStore.imageIndex < 0) {
-            imageStore.nextArray = imageStore.currentArray.slice(0);
-            imageStore.currentArray = imageStore.prevArray.slice(0);
-            imageStore.imageIndex = imageStore.currentArray.length - 1; // 14
-            var idBefore = imageStore.currentArray[0].data.name;
+        store.imageIndex--;
+        if (store.imageIndex < 0) {
+            store.nextArray = store.currentArray.slice(0);
+            store.currentArray = store.prevArray.slice(0);
+            store.imageIndex = store.currentArray.length - 1; // 14
+            var idBefore = store.currentArray[0].data.name;
             ajaxCall(createUrl(subreddit, idBefore, "", DEFAULT_LIMIT), false);
         }
-        $("#currentImage").attr("src", imageStore.currentArray[imageStore.imageIndex].data.url);
-        $("#titleHeader").text(imageStore.currentArray[imageStore.imageIndex].data.title);
+        $("#currentImage").attr("src", store.currentArray[store.imageIndex].data.url);
+        $("#titleHeader").text(store.currentArray[store.imageIndex].data.title);
         $("#images a").attr('href', 'http://www.reddit.com' +
-            imageStore.currentArray[imageStore.imageIndex].data.permalink);
-        $('#commentPara').text(imageStore.currentArray[imageStore.imageIndex].data.topComment);
+            store.currentArray[store.imageIndex].data.permalink);
+        $('#commentPara').text(store.currentArray[store.imageIndex].data.topComment);
     }
 
     function doOnNextClick() {
 
-        imageStore.imageIndex++;
+        store.imageIndex++;
 
-        if (imageStore.imageIndex === imageStore.currentArray.length) {
-            imageStore.prevArray = imageStore.currentArray.slice(0);
-            imageStore.currentArray = imageStore.nextArray.slice(0);
-            imageStore.imageIndex = 0;
-            var idAfter = imageStore.currentArray[imageStore.currentArray.length - 1].data.name;
+        if (store.imageIndex === store.currentArray.length) {
+            store.prevArray = store.currentArray.slice(0);
+            store.currentArray = store.nextArray.slice(0);
+            store.imageIndex = 0;
+            var idAfter = store.currentArray[store.currentArray.length - 1].data.name;
             ajaxCall(createUrl(subreddit, "", idAfter, DEFAULT_LIMIT), true);
         }
-        $("#currentImage").attr("src", imageStore.currentArray[imageStore.imageIndex].data.url);
-        $("#titleHeader").text(imageStore.currentArray[imageStore.imageIndex].data.title);
+        $("#currentImage").attr("src", store.currentArray[store.imageIndex].data.url);
+        $("#titleHeader").text(store.currentArray[store.imageIndex].data.title);
         $('#images a').attr('href', 'http://www.reddit.com' +
-            imageStore.currentArray[imageStore.imageIndex].data.permalink);
-        $('#commentPara').text(imageStore.currentArray[imageStore.imageIndex].data.topComment);
+            store.currentArray[store.imageIndex].data.permalink);
+        $('#commentPara').text(store.currentArray[store.imageIndex].data.topComment);
     }
 
     function ajaxCall(formed_url, seekNext) {
@@ -101,49 +102,46 @@ $(document).ready(function () {
 
     function picsCallback(data, seekNext) {
 
-        var comment = '';
-
         $.each(data.data.children, function (i, item) {
             imageBuffer[i] = item;
             purifyUrl(imageBuffer[i]);
-            comment = ajaxGetComment(item);
-            imageBuffer[i].data.topComment = comment;
+            ajaxGetComment(item, i); // this line sets the topComment field in the item object.
         });
 
 
         if (needsInit === true) {
             needsInit = false;
-            imageStore.currentArray = imageBuffer.slice(0);
+            store.currentArray = imageBuffer.slice(0);
 
             generateDOM();
 
-            firstId = imageStore.currentArray[0].data.name; // to know when to stop for prev
+            firstId = store.currentArray[0].data.name; // to know when to stop for prev
 
-            var idAfter = imageStore.currentArray[imageStore.currentArray.length - 1].data.name;
+            var idAfter = store.currentArray[store.currentArray.length - 1].data.name;
             ajaxCall(createUrl(subreddit, "", idAfter, DEFAULT_LIMIT), true);
         }
 
         else {
             if (seekNext) // forwards
-                imageStore.nextArray = imageBuffer.slice(0);
+                store.nextArray = imageBuffer.slice(0);
             else // backwards
-                imageStore.prevArray = imageBuffer.slice(0);
+                store.prevArray = imageBuffer.slice(0);
         }
 
         function generateDOM() {
             var titleText = '';
-            titleText = imageStore.currentArray[0].data.title;
+            titleText = store.currentArray[0].data.title;
 
             $("<div/>").prependTo('#images').attr('id', 'titleDiv');
             $("<h2/>").text(titleText).attr('id', 'titleHeader').appendTo('#titleDiv');
 
             $("<img/>").attr({
-                src:imageStore.currentArray[0].data.url,
+                src:store.currentArray[0].data.url,
                 id:"currentImage"
             }).appendTo("#images");
 
             $("#currentImage").wrap('<a href="http://www.reddit.com' +
-                imageStore.currentArray[0].data.permalink + '"></a>');
+                store.currentArray[0].data.permalink + '"></a>');
 
             $("<div/>").attr({
                 id:"commentDiv"
@@ -151,14 +149,21 @@ $(document).ready(function () {
 
             $("<p/>").attr({
                 id:"commentPara"
-            }).text(imageStore.currentArray[0].data.topComment).appendTo("#commentDiv");
+            }).text(store.currentArray[0].data.topComment).appendTo("#commentDiv");
         }
 
-        function ajaxGetComment(item) {
+        function ajaxGetComment(item, itemIndex) {
+
             var commentUrl = "http://www.reddit.com" + item.data.permalink + '.json?'
                 + 'limit=2&jsonp=?&callback=?';
             $.getJSON(commentUrl, function(data){
                 item.data.topComment = data[1].data.children[0].data.body;
+
+                if ((isFirstComment) && (itemIndex == 0))
+                {
+                    isFirstComment = false;
+                    $('#commentPara').text(store.currentArray[0].data.topComment);
+                }
             });
         }
     }
