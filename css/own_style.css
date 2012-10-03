@@ -17,10 +17,11 @@
 
 
 
-#images img{
-    max-height: 400px;
-    max-width: 100%;
+.image{
+    max-height: 600px;
+    max-width: 400px;
     padding-bottom: 10px;
     padding-top: 10px;
     margin: 0 auto;
 }
+
