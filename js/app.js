@@ -184,6 +184,9 @@ $(document).ready(function () {
         switch (extension) {
             case 'jpg':
             case 'png':
+            case 'tif':
+            case 'tiff':
+            case 'jpeg':
             case 'gif':
                 return;
         }
