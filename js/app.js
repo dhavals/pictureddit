@@ -137,7 +137,7 @@ $(document).ready(function () {
         if (firstId === store.currentArray[0].data.name && store.prevIndex === 0)
             return;
 
-        var loadIndex = (newFocus - 2) % 5;
+        var loadIndex = (newFocus + 5 - 2) % 5;
         var pseudoPrevIndex = 0;
         store.prevIndex--;
         store.nextIndex--;
@@ -149,6 +149,7 @@ $(document).ready(function () {
 //            $('#image' + loadIndex).attr('src', DEFAULT_URL); // load the image in prev-load slot to nothing, essentially
 //            return;
 //        }
+        console.log(loadIndex);
 
         if (store.prevIndex < 0)
         {
@@ -208,7 +209,7 @@ $(document).ready(function () {
             $("#image" + loadIndex).attr("src", store.nextArray[pseudoNextIndex].data.url);
             return;
         }
-        console.dir(store.nextIndex);
+        // console.dir(store.nextIndex);
         $("#image" + loadIndex).attr("src", store.currentArray[store.nextIndex].data.url);
        // $("#titleDiv" + loadIndex).text(store.currentArray[store.nextIndex].data.title);
     }
