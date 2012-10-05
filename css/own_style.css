@@ -11,13 +11,13 @@ body {
     padding: 0;
     margin: 0 auto;
     height: 400px;
-    width: 900px;
+    width: 930px;
 }
 
 .roundabout-moveable-item {
-    height: 450px;
+    height: 470px;
     width: 400px;
-    padding-top: 40px;
+    padding-top: 20px;
     padding-left: 20px;
     padding-right: 20px;
     padding-bottom: 20px;
@@ -29,10 +29,19 @@ body {
 .imgContainer {
     padding: 00px;
     /*background-color: black;*/
-    height: 80%;
-    margin: 0 auto;
+    height: 70%;
+    margin-top: 17.5%;
     overflow: hidden;
 }
+
+.roundabout-in-focus .imgContainer {
+    padding: 00px;
+    /*background-color: black;*/
+    height: 65%;
+    margin-top: 0%;
+    overflow: hidden;
+}
+
 
 .slide {
 }
@@ -42,8 +51,76 @@ body {
     width: 100%;
     background-color: white;
     overflow: hidden;
+    -webkit-transition: all 0s ease-in-out 0s; /* this is so all properties animate
+back to default */
+    -moz-transition: all 0s ease-in-out 0s;
+    -o-transition: all 0s ease-in-out 0s;
+    transition: all 0s ease-in-out 0s;
 }
 
 .roundabout-in-focus {
     cursor: auto;
+}
+
+.contentTitle{
+    margin: 0px;
+    height: 0%;
+    padding: 0px;
+    color: ThreeDDarkShadow;
+    font-family: 'Droid Sans', sans-serif;
+    font-size: 10px;
+    display:hidden;
+    overflow: hidden;
+}
+
+
+.roundabout-in-focus .contentTitle{
+    margin: 0px;
+    height: 15%;
+    padding: 0px;
+    color: ThreeDDarkShadow;
+    font-family: 'Carrois Gothic', sans-serif;
+    font-size: 10px;
+    overflow: auto;
+    -webkit-transition: all 0s ease-in-out 0s; /* this is so all properties animate
+back to default */
+    -moz-transition: all 0s ease-in-out 0s;
+    -o-transition: all 0s ease-in-out 0s;
+    transition: all 0s ease-in-out 0s;
+}
+
+h1{
+    margin: 0px;
+    padding: 0px;
+}
+
+.comment{
+    margin: 0px;
+    height: 0%;
+    padding: 0px;
+    color: ThreeDDarkShadow;
+    font-family: 'Droid Sans', sans-serif;
+    font-size: 10px;
+    display:hidden;
+    overflow: hidden;
+}
+
+
+.roundabout-in-focus .comment{
+    margin: 0px;
+    height: 15%;
+    padding: 0px;
+    color: ThreeDDarkShadow;
+    font-family: 'Carrois Gothic', sans-serif;
+    font-size: 10px;
+    -webkit-transition: all 0s ease-in-out 0s; /* this is so all properties animate
+back to default */
+    -moz-transition: all 0s ease-in-out 0s;
+    -o-transition: all 0s ease-in-out 0s;
+    transition: all 0s ease-in-out 0s;
+}
+
+h2{
+    margin: 0px;
+    padding: 0px;
 }
