@@ -7,7 +7,7 @@ body {
     background: url('../assets/images/fabric_plaid.png') repeat center;
 
     box-shadow: 0 0 4px 4px #969696;
-    -webkit-box-shadow: 0 0 4px 4px #c1c1c1;
+    -webkit-box-shadow: 0 0 4px 4px #c1c1c0;
 
     border-radius: 15px;
     -webkit-border-radius: 20px;
