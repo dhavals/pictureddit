@@ -1,0 +1,11 @@
+body {
+    background-color: #dcdcdc;
+    color: #eee;
+}
+
+.slide {
+    background-color: #f5f5f5;
+    box-shadow: 0 0 5px 5px #d3d3d3;
+    -webkit-box-shadow: 0 0 5px 5px #d3d3d3;
+}
+

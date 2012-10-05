@@ -21,6 +21,15 @@ function ImageStore(index) {
 
 $(document).ready(function () {
 
+    $("a.fancyBoxClass").fancybox({
+        'afterClose':function () {
+            console.dir(this);
+            this.element[0].style.display = "";
+        },
+        'closeOnClick': true,
+        'autoScale': true
+    });
+
 
     var carousel;
     var oldFocus = 0;
@@ -96,8 +105,7 @@ $(document).ready(function () {
             + "&before=" + idBefore + "&after=" + idAfter + "&jsonp=?&callback=?";
     }
 
-    function doOnPrev(newFocus)
-    {
+    function doOnPrev(newFocus) {
         if (firstId === store.currentArray[0].data.name && store.prevIndex === 0)
             return;
 
@@ -108,8 +116,7 @@ $(document).ready(function () {
 
         console.log(loadIndex);
 
-        if (store.prevIndex < 0)
-        {
+        if (store.prevIndex < 0) {
             console.log("in prevIndex lt 0");
             store.nextArray = store.currentArray.slice(0);
             store.currentArray = store.prevArray.slice(0);
@@ -142,14 +149,14 @@ $(document).ready(function () {
             ajaxCall(createUrl(subreddit, "", idAfter, DEFAULT_LIMIT), true);
         }
 
-        if (store.nextIndex >= store.currentArray.length ){
+        if (store.nextIndex >= store.currentArray.length) {
             pseudoNextIndex = store.nextIndex - store.currentArray.length;
             $("#image" + loadIndex).attr("src", store.nextArray[pseudoNextIndex].data.url);
             return;
         }
         // console.dir(store.nextIndex);
         $("#image" + loadIndex).attr("src", store.currentArray[store.nextIndex].data.url);
-       // $("#titleDiv" + loadIndex).text(store.currentArray[store.nextIndex].data.title);
+        // $("#titleDiv" + loadIndex).text(store.currentArray[store.nextIndex].data.title);
     }
 
     function ajaxCall(formed_url, seekNext) {
@@ -186,7 +193,7 @@ $(document).ready(function () {
 
             var contentDivs = $('#carousel').children('div');
             $.each(contentDivs, function (i, item) {
-                if(i < 3){
+                if (i < 3) {
                     $(item).find('.image').attr('src', store.currentArray[i].data.url);
                 }
             });
