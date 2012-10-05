@@ -15,8 +15,6 @@ function ImageStore(index) {
     this.currentArray = [];
     this.nextArray = [];
 
-    this.imageIndex = index; // always refers to the currentArray.
-
     this.prevIndex = index - 2;
     this.nextIndex = index + 2; // so we can check for violating upper boundaries of array
 }
@@ -69,7 +67,7 @@ $(document).ready(function () {
      * @param newFocus focus at end of transition
      * @return {Number} 1 indicating next, -1 indicating previous.
      */
-        // TODO: right now only works for the case where they differ by 1!!!!
+
     function spinDirection(oldFocus, newFocus) {
         if (oldFocus === 0) {
             if (newFocus === NUM_SLIDES - 1)  // 4 i.e. previous
@@ -91,49 +89,15 @@ $(document).ready(function () {
         }
     }
 
-
     ajaxCall(formed_url, true);
-
-//    $("#prevbutton").click(doOnPrevClick);
-//    $("#nextbutton").click(doOnNextClick);
-
-    $(document).keydown(function (e) {
-        if (e.keyCode === 37) { // left
-            doOnPrevClick();
-        }
-        else if (e.keyCode === 39) { // right
-            doOnNextClick();
-        }
-    });
-
 
     function createUrl(subreddit, idBefore, idAfter, limit) {
         return "http://www.reddit.com/r/" + subreddit + "/.json?limit=" + limit
             + "&before=" + idBefore + "&after=" + idAfter + "&jsonp=?&callback=?";
     }
 
-    function doOnPrevClick() {
-        if (firstId === store.currentArray[0].data.name && store.imageIndex === 0)
-            return;
-
-        store.imageIndex--;
-        if (store.imageIndex < 0) {
-            store.nextArray = store.currentArray.slice(0);
-            store.currentArray = store.prevArray.slice(0);
-            store.imageIndex = store.currentArray.length - 1; // 14
-            var idBefore = store.currentArray[0].data.name;
-            ajaxCall(createUrl(subreddit, idBefore, "", DEFAULT_LIMIT), false);
-        }
-        $("#currentImage").attr("src", store.currentArray[store.imageIndex].data.url);
-        $("#titleHeader").text(store.currentArray[store.imageIndex].data.title);
-        $("#images a").attr('href', 'http://www.reddit.com' +
-            store.currentArray[store.imageIndex].data.permalink);
-        $('#commentPara').text(store.currentArray[store.imageIndex].data.topComment);
-    }
-
     function doOnPrev(newFocus)
     {
-        //TODO: disable carousel if trying to go before first image!
         if (firstId === store.currentArray[0].data.name && store.prevIndex === 0)
             return;
 
@@ -142,13 +106,6 @@ $(document).ready(function () {
         store.prevIndex--;
         store.nextIndex--;
 
-        //TODO: make sure this comment is completely/actually not needed....
-//        if (store.prevArray.length === 0)
-//        {
-//            console.log("In no prev array");
-//            $('#image' + loadIndex).attr('src', DEFAULT_URL); // load the image in prev-load slot to nothing, essentially
-//            return;
-//        }
         console.log(loadIndex);
 
         if (store.prevIndex < 0)
@@ -165,25 +122,6 @@ $(document).ready(function () {
 
         $("#image" + loadIndex).attr("src", store.currentArray[store.prevIndex].data.url);
     }
-
-    function doOnNextClick() {
-
-        store.imageIndex++;
-
-        if (store.imageIndex === store.currentArray.length) {
-            store.prevArray = store.currentArray.slice(0);
-            store.currentArray = store.nextArray.slice(0);
-            store.imageIndex = 0;
-            var idAfter = store.currentArray[store.currentArray.length - 1].data.name;
-            ajaxCall(createUrl(subreddit, "", idAfter, DEFAULT_LIMIT), true);
-        }
-        $("#currentImage").attr("src", store.currentArray[store.imageIndex].data.url);
-        $("#titleHeader").text(store.currentArray[store.imageIndex].data.title);
-        $('#images a').attr('href', 'http://www.reddit.com' +
-            store.currentArray[store.imageIndex].data.permalink);
-        $('#commentPara').text(store.currentArray[store.imageIndex].data.topComment);
-    }
-
 
     function doOnNext(newFocus) {
 
@@ -264,30 +202,6 @@ $(document).ready(function () {
                 store.nextArray = imageBuffer.slice(0);
             else // backwards
                 store.prevArray = imageBuffer.slice(0);
-        }
-
-        function generateDOM() {
-            var titleText = '';
-            titleText = store.currentArray[0].data.title;
-
-            $("<div/>").prependTo('#images').attr('id', 'titleDiv');
-            $("<h2/>").text(titleText).attr('id', 'titleHeader').appendTo('#titleDiv');
-
-            $("<img/>").attr({
-                src:store.currentArray[0].data.url,
-                id:"currentImage"
-            }).appendTo("#images");
-
-            $("#currentImage").wrap('<a href="http://www.reddit.com' +
-                store.currentArray[0].data.permalink + '"></a>');
-
-            $("<div/>").attr({
-                id:"commentDiv"
-            }).appendTo("#images");
-
-            $("<p/>").attr({
-                id:"commentPara"
-            }).text(store.currentArray[0].data.topComment).appendTo("#commentDiv");
         }
 
         function ajaxGetComment(item, itemIndex) {
