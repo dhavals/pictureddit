@@ -37,7 +37,7 @@ body {
 .slide {
 }
 
-.roundabout-moveable-item .imgContainer img {
+.roundabout-moveable-item .imgContainer .image {
     height: auto;
     width: 100%;
     background-color: white;
