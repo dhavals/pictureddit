@@ -106,13 +106,16 @@ $(document).ready(function () {
     }
 
     function doOnPrev(newFocus) {
-        if (firstId === store.currentArray[0].data.name && store.prevIndex === -2)
-            return;
+//        if (firstId === store.currentArray[0].data.name && store.prevArray.length === 0)
+//            return;
 
         var loadIndex = (newFocus + 5 - 2) % 5;
         var pseudoPrevIndex = 0;
         store.prevIndex--;
         store.nextIndex--;
+
+        if (firstId === store.currentArray[0].data.name && store.prevIndex < 0)
+            return;
 
         console.log(loadIndex);
 
@@ -143,6 +146,9 @@ $(document).ready(function () {
 
         store.prevIndex++;
         store.nextIndex++;
+
+        if (firstId === store.currentArray[0].data.name && store.nextIndex < 0)
+            return;
 
         if (store.prevIndex === store.currentArray.length) {
             store.prevArray = store.currentArray.slice(0);
