@@ -106,7 +106,7 @@ $(document).ready(function () {
     }
 
     function doOnPrev(newFocus) {
-        if (firstId === store.currentArray[0].data.name && store.prevIndex === 0)
+        if (firstId === store.currentArray[0].data.name && store.prevIndex === -2)
             return;
 
         var loadIndex = (newFocus + 5 - 2) % 5;
@@ -117,7 +117,7 @@ $(document).ready(function () {
         console.log(loadIndex);
 
         if (store.prevIndex < 0) {
-            console.log("in prevIndex lt 0");
+            console.log("previndex is" + store.prevIndex );
             store.nextArray = store.currentArray.slice(0);
             store.currentArray = store.prevArray.slice(0);
             store.prevIndex = store.currentArray.length - 1; // 14
@@ -127,7 +127,13 @@ $(document).ready(function () {
             ajaxCall(createUrl(subreddit, idBefore, "", DEFAULT_LIMIT), false);
         }
 
+        if (store.currentArray[store.prevIndex].data.url === DEFAULT_URL){
+            doOnPrev(newFocus);
+            return;
+        }
+
         $("#image" + loadIndex).attr("src", store.currentArray[store.prevIndex].data.url);
+        $("#titleDiv" + loadIndex + " .title").html(store.currentArray[store.prevIndex].data.title);
     }
 
     function doOnNext(newFocus) {
@@ -149,14 +155,28 @@ $(document).ready(function () {
             ajaxCall(createUrl(subreddit, "", idAfter, DEFAULT_LIMIT), true);
         }
 
+
         if (store.nextIndex >= store.currentArray.length) {
             pseudoNextIndex = store.nextIndex - store.currentArray.length;
+            if (store.nextArray[pseudoNextIndex].data.url === DEFAULT_URL){
+                doOnNext(newFocus);
+                console.log("cant display image");
+                return;
+            }
             $("#image" + loadIndex).attr("src", store.nextArray[pseudoNextIndex].data.url);
+            $("#titleDiv" + loadIndex + " .title").html(store.nextArray[pseudoNextIndex].data.title);
+            return;
+        }
+
+
+        if (store.currentArray[store.nextIndex].data.url === DEFAULT_URL){
+            doOnNext(newFocus);
+            console.log("cant display image");
             return;
         }
         // console.dir(store.nextIndex);
         $("#image" + loadIndex).attr("src", store.currentArray[store.nextIndex].data.url);
-        // $("#titleDiv" + loadIndex).text(store.currentArray[store.nextIndex].data.title);
+        $("#titleDiv" + loadIndex +" .title").html(store.currentArray[store.nextIndex].data.title);
     }
 
     function ajaxCall(formed_url, seekNext) {
@@ -195,6 +215,7 @@ $(document).ready(function () {
             $.each(contentDivs, function (i, item) {
                 if (i < 3) {
                     $(item).find('.image').attr('src', store.currentArray[i].data.url);
+                    $(item).find('.title').html(store.currentArray[i].data.title);
                 }
             });
 
@@ -220,7 +241,7 @@ $(document).ready(function () {
 
                 if ((isFirstComment) && (itemIndex === 0)) {
                     isFirstComment = false;
-                    $('#commentPara').text(store.currentArray[0].data.topComment);
+                    $('#commentDiv' + 0 + " .topComment").html(store.currentArray[0].data.topComment);
                 }
             });
         }
