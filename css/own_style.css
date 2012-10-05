@@ -80,7 +80,7 @@ body {
     padding: 00px;
     /*background-color: black;*/
     height: 70%;
-    margin-top: 17.5%;
+   margin-top: 17.9%;
     overflow: hidden;
 }
 
@@ -118,7 +118,7 @@ back to default */
     padding: 0px;
     color: ThreeDDarkShadow;
     font-family: 'Droid Sans', sans-serif;
-    display:hidden;
+    display: hidden;
     overflow: hidden;
 }
 
@@ -131,8 +131,7 @@ back to default */
     font-family: 'Carrois Gothic', sans-serif;
     font-size: 20px;
     overflow: auto;
-    -webkit-transition: all 0s ease-in-out 0s; /* this is so all properties animate
-back to default */
+    -webkit-transition: all 0s ease-in-out 0s;
     -moz-transition: all 0s ease-in-out 0s;
     -o-transition: all 0s ease-in-out 0s;
     transition: all 0s ease-in-out 0s;
