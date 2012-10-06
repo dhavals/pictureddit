@@ -61,12 +61,12 @@ body {
     padding: 0;
     margin: 0 auto;
     height: 400px;
-    width: 930px;
+    width: 870px;
 }
 
 .roundabout-moveable-item {
-    height: 470px;
-    width: 400px;
+    height: 400px;
+    width: 370px;
     padding-top: 20px;
     padding-left: 20px;
     padding-right: 20px;
@@ -79,7 +79,7 @@ body {
 .imgContainer {
     padding: 00px;
     padding-top: 20px;
-    border-top: 1px solid #a9a9a9;
+    border-top: 1px solid #c9c2b0;
     height: 60%;
     margin-top: 17.9%;
     overflow: hidden;
@@ -88,7 +88,7 @@ body {
 .roundabout-in-focus .imgContainer {
     padding: 00px;
     padding-top: 20px;
-    border-top: 1px solid #a9a9a9;
+    border-top: 1px solid #c9c2b0;
     height: 60%;
     margin-top: 0%;
     overflow: hidden;
@@ -125,7 +125,7 @@ back to default */
     margin: 0px;
     height: 15%;
     padding: 0px;
-    color: ThreeDDarkShadow;
+    color: #a62121;
     font-family: 'Droid Sans', sans-serif;
     display: none;
     overflow: hidden;
@@ -137,7 +137,7 @@ back to default */
     height: 15%;
     padding: 0px;
     display:block;
-    color: ThreeDDarkShadow;
+    color: #a62121;
     font-family: 'Carrois Gothic', sans-serif;
     font-size: 20px;
     overflow: auto;
@@ -158,8 +158,8 @@ back to default */
     width: 100%;
     padding: 0px;
     padding-top: 10px;
-    border-top: 1px solid gray;
-    color: ThreeDDarkShadow;
+    border-top: 1px solid #c9c2b0;
+    color: #9d4a42;
     font-family: 'Droid Sans', sans-serif;
     font-size: 15px;
     display:hidden;
@@ -171,9 +171,9 @@ back to default */
 .roundabout-in-focus .comment{
     margin-top: 20px;
     height: 15%;
-    border-top: 1px solid gray;
+    border-top: 1px solid #c9c2b0;
     padding-top: 10px;
-    color: ThreeDDarkShadow;
+    color: #9d4a42;
     font-family: 'Carrois Gothic', sans-serif;
     font-size: 15px;
     overflow: auto;

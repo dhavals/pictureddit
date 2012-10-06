@@ -80,6 +80,11 @@ $(document).ready(function (e) {
         var isSecondComment = true;
         var isThirdComment = true;
 
+        var isFirstImage = true;
+        var isSecondImage = true;
+        var isThirdImage = true;
+
+
         var formed_url = createUrl(subreddit, "", "", DEFAULT_LIMIT);
 
 
@@ -245,7 +250,14 @@ $(document).ready(function (e) {
             // this is exclusively the backend
             $.each(data.data.children, function (i, item) {
                 imageBuffer[i] = item;
-                purifyUrl(imageBuffer[i]);
+
+                if(needsInit){
+                    purifyUrl(imageBuffer[i], i, true);
+                }
+                else{
+                    purifyUrl(imageBuffer[i], i, false);
+                }
+
                 ajaxGetComment(item, i); // this line sets the topComment field in the item object.
                 // also, for the first comment, it adds it to the commentDiv for display.
             });
@@ -306,7 +318,7 @@ $(document).ready(function (e) {
         }
 
 
-        function purifyUrl(childObject) {
+        function purifyUrl(childObject, i, isInit) {
 
             var imgurAlbumRegex = /http:\/\/imgur.com\/a\//;
             var getUrl = '';
@@ -336,6 +348,24 @@ $(document).ready(function (e) {
 
                 $.getJSON(getUrl, function (data) {
                     childObject.data.url = data.album.images[0].links.original;
+
+                    if (isInit){
+
+                        if (isFirstImage && (i === 0)){
+                            isFirstImage = false;
+                            $("#image" + 0).attr("src", childObject.data.url);
+                        }
+
+                        if (isSecondImage && (i === 1)){
+                            isSecondImage = false;
+                            $("#image" + 1).attr("src", childObject.data.url);
+                        }
+
+                        if (isThirdImage && (i === 2)){
+                            isSecondImage = false;
+                            $("#image" + 2).attr("src", childObject.data.url);
+                        }
+                    }
                 });
             }
             else if (impureUrl.match(imgurSingleRegex)) {
@@ -344,6 +374,24 @@ $(document).ready(function (e) {
 
                 $.getJSON(getUrl, function (data) {
                     childObject.data.url = data.image.links.original;
+
+                    if (isInit){
+
+                        if (isFirstImage && (i === 0)){
+                            isFirstImage = false;
+                            $("#image" + 0).attr("src", childObject.data.url);
+                        }
+
+                        if (isSecondImage && (i === 1)){
+                            isSecondImage = false;
+                            $("#image" + 1).attr("src", childObject.data.url);
+                        }
+
+                        if (isThirdImage && (i === 2)){
+                            isSecondImage = false;
+                            $("#image" + 2).attr("src", childObject.data.url);
+                        }
+                    }
                 });
             }
             else {
