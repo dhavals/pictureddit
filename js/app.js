@@ -136,7 +136,7 @@ $(document).ready(function () {
             doOnPrev(newFocus);
             return;
         }
-
+        $('#commentDiv' + loadIndex + " .topComment").html("");
         $("#image" + loadIndex).attr("src", store.currentArray[store.prevIndex].data.url);
         $("#titleDiv" + loadIndex + " .title").html(store.currentArray[store.prevIndex].data.title);
         $('#commentDiv' + loadIndex + " .topComment").html(store.currentArray[store.prevIndex].data.topComment);
@@ -172,6 +172,7 @@ $(document).ready(function () {
                 console.log("cant display image");
                 return;
             }
+            $('#commentDiv' + loadIndex + " .topComment").html("");
             $("#image" + loadIndex).attr("src", store.nextArray[pseudoNextIndex].data.url);
             $("#titleDiv" + loadIndex + " .title").html(store.nextArray[pseudoNextIndex].data.title);
             $('#commentDiv' + loadIndex + " .topComment").html(store.nextArray[pseudoNextIndex].data.topComment);
@@ -185,6 +186,7 @@ $(document).ready(function () {
             return;
         }
         // console.dir(store.nextIndex);
+        $('#commentDiv' + loadIndex + " .topComment").html("");
         $("#image" + loadIndex).attr("src", store.currentArray[store.nextIndex].data.url);
         $("#titleDiv" + loadIndex +" .title").html(store.currentArray[store.nextIndex].data.title)
         $('#commentDiv' + loadIndex + " .topComment").html(store.currentArray[store.nextIndex].data.topComment);
