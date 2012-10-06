@@ -6,7 +6,7 @@
  * To change this template use File | Settings | File Templates.
  */
 
-var DEFAULT_URL = 'assets/images/productNotAvailable.jpg';
+var DEFAULT_URL = 'assets/images/redditBroke.png';
 var DEFAULT_LIMIT = 10;
 var NUM_SLIDES = 5;
 
