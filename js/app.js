@@ -31,6 +31,8 @@ $(document).ready(function (e) {
 
     $('#carousel').css('display', 'none');
     $('#myCanvas1').css('display', 'none');
+    $('#submitButton2').click( function(){
+    } );
 
 
     $('#basic-modal-content').modal({
@@ -45,7 +47,7 @@ $(document).ready(function (e) {
             if (subreddit == '')
                 subreddit = '/pics';
 
-            console.log(subreddit);
+
             doAll(subreddit);
 
             dialog.data.fadeOut('slow', function () {
@@ -60,11 +62,12 @@ $(document).ready(function (e) {
         }
     });
 
+
     function doAll(subreddit) {
 
         $("a.fancyBoxClass").fancybox({
             'afterClose':function () {
-                console.dir(this);
+
                 this.element[0].style.display = "";
             },
             'closeOnClick':true,
@@ -166,10 +169,9 @@ $(document).ready(function (e) {
             if (firstId === store.currentArray[0].data.name && store.prevIndex < 0)
                 return;
 
-            console.log(loadIndex);
+
 
             if (store.prevIndex < 0) {
-                console.log("previndex is" + store.prevIndex);
                 store.nextArray = store.currentArray.slice(0);
                 store.currentArray = store.prevArray.slice(0);
                 store.prevIndex = store.currentArray.length - 1; // 14
@@ -216,7 +218,7 @@ $(document).ready(function (e) {
                 pseudoNextIndex = store.nextIndex - store.currentArray.length;
                 if (store.nextArray[pseudoNextIndex].data.url === DEFAULT_URL) {
                     doOnNext(newFocus);
-                    console.log("cant display image");
+
                     return;
                 }
                 $('#commentDiv' + loadIndex + " .topComment").html("");
@@ -229,7 +231,7 @@ $(document).ready(function (e) {
 
             if (store.currentArray[store.nextIndex].data.url === DEFAULT_URL) {
                 doOnNext(newFocus);
-                console.log("cant display image");
+
                 return;
             }
             // console.dir(store.nextIndex);
@@ -240,13 +242,12 @@ $(document).ready(function (e) {
         }
 
         function ajaxCall(formed_url, seekNext) {
-            console.log(formed_url);
+
             $.ajax({
                 type:"GET",
                 url:formed_url,
                 dataType:"json",
                 success:function (data) {
-                    console.dir(data);
                     picsCallback(data, seekNext);
                 },
                 cache:false
@@ -256,23 +257,20 @@ $(document).ready(function (e) {
         function picsCallback(data, seekNext) {
 
             // this is exclusively the backend
-
-            console.dir(data);
-
             $.each(data.data.children, function (i, item) {
                 imageBuffer[i] = item;
 
-
-
                 if(needsInit){
-                    purifyUrl(imageBuffer[i], i, true);
+                    purifyUrl(item, i, true, 0);
                 }
                 else{
-                    purifyUrl(imageBuffer[i], i, false);
+                    if(seekNext)
+                        purifyUrl(item, i, false, 1);
+                    else{
+                        purifyUrl(item, i, false, -1);
+                    }
                 }
 
-                ajaxGetComment(item, i); // this line sets the topComment field in the item object.
-                // also, for the first comment, it adds it to the commentDiv for display.
             });
 
 
@@ -280,7 +278,6 @@ $(document).ready(function (e) {
                 needsInit = false;
                 store.currentArray = imageBuffer.slice(0);
 
-                // generateDOM();
 
                 // at this point, we already have the currentArray full of images, with nextArray having nothing.
 
@@ -290,7 +287,6 @@ $(document).ready(function (e) {
                         $(item).find('.image').attr('src', store.currentArray[i].data.url);
                         $(item).find('.title').html(store.currentArray[i].data.title);
                         $('#commentDiv' + i + " .topComment").html(store.currentArray[i].data.topComment);
-                        console.dir(store.currentArray[i].data.topComment)
                     }
                 });
 
@@ -306,14 +302,36 @@ $(document).ready(function (e) {
                 else // backwards
                     store.prevArray = imageBuffer.slice(0);
             }
+        }
 
-            function ajaxGetComment(item, itemIndex) {
 
-                var commentUrl = "http://www.reddit.com" + item.data.permalink + '.json?'
-                    + 'limit=2&jsonp=?&callback=?';
-                $.getJSON(commentUrl, function (data) {
+        function ajaxGetComment(item, itemIndex, isInit, arrayNumber) {
+
+            var commentUrl = "http://www.reddit.com" + item.data.permalink + '.json?'
+                + 'limit=2&jsonp=?&callback=?';
+            $.getJSON(commentUrl, function (data) {
+                console.dir(data[1]);
+//
+                if (data[1].data.children[0] == undefined){
+                    item.data.topComment = "";
+                }
+                else{
                     item.data.topComment = data[1].data.children[0].data.body;
+                }
 
+
+
+                if (arrayNumber === 0){
+                    store.currentArray[itemIndex].data.topComment = item.data.topComment;
+                }
+                else if (arrayNumber === 1){
+                    store.nextArray[itemIndex].data.topComment = item.data.topComment;
+                }
+                else if (arrayNumber === -1){
+                    store.prevArray[itemIndex].data.topComment = item.data.topComment;
+                }
+
+                if (isInit){
                     if ((isFirstComment) && (itemIndex === 0)) {
                         isFirstComment = false;
                         $('#commentDiv' + 0 + " .topComment").html(store.currentArray[0].data.topComment);
@@ -326,12 +344,12 @@ $(document).ready(function (e) {
                         isThirdComment = false;
                         $('#commentDiv' + 2 + " .topComment").html(store.currentArray[2].data.topComment);
                     }
-                });
-            }
+                }
+
+            });
         }
 
-
-        function purifyUrl(childObject, i, isInit) {
+        function purifyUrl(childObject, i, isInit, arrayNumber) {
 
             var imgurAlbumRegex = /http:\/\/imgur.com\/a\//;
             var getUrl = '';
@@ -350,6 +368,22 @@ $(document).ready(function (e) {
                 case 'tiff':
                 case 'jpeg':
                 case 'gif':
+
+                    if (arrayNumber === 0){
+                        store.currentArray[i] = childObject;
+                    }
+                    else if (arrayNumber === 1){
+                        store.nextArray[i] = childObject;
+                    }
+                    else if (arrayNumber === -1){
+                        store.prevArray[i] = childObject;
+                    }
+
+
+                    ajaxGetComment(childObject, i, isInit, arrayNumber); // this line sets the topComment field in the item object.
+                    // also, for the first comment, it adds it to the commentDiv for display.
+
+
                     return;
             }
 
@@ -379,6 +413,21 @@ $(document).ready(function (e) {
                             $("#image" + 2).attr("src", childObject.data.url);
                         }
                     }
+
+
+                    if (arrayNumber === 0){
+                        store.currentArray[i] = childObject;
+                    }
+                    else if (arrayNumber === 1){
+                        store.nextArray[i] = childObject;
+                    }
+                    else if (arrayNumber === -1){
+                        store.prevArray[i] = childObject;
+                    }
+
+
+                    ajaxGetComment(childObject, i, isInit, arrayNumber); // this line sets the topComment field in the item object.
+                    // also, for the first comment, it adds it to the commentDiv for display.
                 });
             }
             else if (impureUrl.match(imgurSingleRegex)) {
@@ -405,13 +454,36 @@ $(document).ready(function (e) {
                             $("#image" + 2).attr("src", childObject.data.url);
                         }
                     }
+
+
+                    if (arrayNumber === 0){
+                        store.currentArray[i] = childObject;
+                    }
+                    else if (arrayNumber === 1){
+                        store.nextArray[i] = childObject;
+                    }
+                    else if (arrayNumber === -1){
+                        store.prevArray[i] = childObject;
+                    }
+
+
+                    ajaxGetComment(childObject, i, isInit, arrayNumber); // this line sets the topComment field in the item object.
+                    // also, for the first comment, it adds it to the commentDiv for display.
                 });
             }
             else {
                 childObject.data.url = DEFAULT_URL;
+                if (arrayNumber === 0){
+                    store.currentArray[i] = childObject;
+                }
+                else if (arrayNumber === 1){
+                    store.nextArray[i] = childObject;
+                }
+                else if (arrayNumber === -1){
+                    store.prevArray[i] = childObject;
+                }
             }
         }
-
     }
 });
 

@@ -193,3 +193,9 @@ h2{
     position: absolute;
 }
 
+#changeSubReddit{
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
