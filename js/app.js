@@ -71,10 +71,7 @@ $(document).ready(function (e) {
                 this.element[0].style.display = "";
             },
             'closeOnClick':true,
-            'autoScale':true,
-            'maxWidth': 1200,
-            'maxHeight': 800
-
+            'imageScale':true
         });
 
         var carousel;

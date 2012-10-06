@@ -10,12 +10,16 @@
 
 /* Container */
 #simplemodal-container {
+    position: absolute;
     height: 160px;
-    width: 350px;
+    width: 300px;
     color: #bbb;
     background: url('../assets/images/monkey-bg-normal.jpg') repeat center;
     padding: 12px;
     border-radius: 30px;
-
     text-align: center;
+}
+
+#myCanvas2{
+    postion:absolute;
 }

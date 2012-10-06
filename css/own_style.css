@@ -199,3 +199,17 @@ h2{
     right: 20px;
 }
 
+#submitButton2{
+
+}
+
+#footer{
+    background: url('../assets/images/city_footer.png') repeat;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    position: absolute;
+    bottom: 0;
+    height: 200px;
+    width: 100%;
+}
