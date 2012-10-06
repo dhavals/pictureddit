@@ -31,6 +31,8 @@ $(document).ready(function (e) {
 
     $('#carousel').css('display', 'none');
     $('#myCanvas1').css('display', 'none');
+    $('#submitButton2').css('display', 'none');
+
     $('#submitButton2').click( function(){
     } );
 
@@ -56,11 +58,20 @@ $(document).ready(function (e) {
                         $.modal.close();
                         $('#carousel').css('display', '');
                         $('#myCanvas1').css('display', '');
+                        $('#submitButton2').css('display', '');
                     });
                 });
             });
-        }
-    });
+        },
+
+        onOpen: function (dialog) {
+            dialog.overlay.fadeIn('slow', function () {
+                dialog.data.hide();
+                dialog.container.fadeIn('fast', function () {
+                    dialog.data.fadeIn('fast');
+                });
+            });
+        }});
 
 
     function doAll(subreddit) {
