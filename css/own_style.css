@@ -70,7 +70,7 @@ body {
     padding-top: 20px;
     padding-left: 20px;
     padding-right: 20px;
-    padding-bottom: 20px;
+    padding-bottom: 40px;
     cursor: pointer;
     display: block;
     overflow: hidden;
@@ -78,20 +78,28 @@ body {
 
 .imgContainer {
     padding: 00px;
-    /*background-color: black;*/
-    height: 70%;
-   margin-top: 17.9%;
+    padding-top: 20px;
+    border-top: 1px solid #a9a9a9;
+    height: 60%;
+    margin-top: 17.9%;
     overflow: hidden;
 }
 
 .roundabout-in-focus .imgContainer {
     padding: 00px;
-    /*background-color: black;*/
-    height: 70%;
+    padding-top: 20px;
+    border-top: 1px solid #a9a9a9;
+    height: 60%;
     margin-top: 0%;
     overflow: hidden;
 }
 
+.imageBox{
+    padding-bottom: 10px;
+    padding-top: 10px;
+    background-color: #000000;
+    overflow: hidden;
+}
 
 .slide {
 }
@@ -106,6 +114,7 @@ back to default */
     -moz-transition: all 0s ease-in-out 0s;
     -o-transition: all 0s ease-in-out 0s;
     transition: all 0s ease-in-out 0s;
+    margin: 0 0 20px 0;
 }
 
 .roundabout-in-focus {
@@ -114,11 +123,11 @@ back to default */
 
 .contentTitle{
     margin: 0px;
-    height: 0%;
+    height: 15%;
     padding: 0px;
     color: ThreeDDarkShadow;
     font-family: 'Droid Sans', sans-serif;
-    display: hidden;
+    display: none;
     overflow: hidden;
 }
 
@@ -127,40 +136,46 @@ back to default */
     margin: 0px;
     height: 15%;
     padding: 0px;
+    display:block;
     color: ThreeDDarkShadow;
     font-family: 'Carrois Gothic', sans-serif;
     font-size: 20px;
     overflow: auto;
-    -webkit-transition: all 0s ease-in-out 0s;
-    -moz-transition: all 0s ease-in-out 0s;
-    -o-transition: all 0s ease-in-out 0s;
-    transition: all 0s ease-in-out 0s;
+    -webkit-transition: all 0.3s ease-in-out 0s;
+    -moz-transition: all 0.3s ease-in-out 0s;
+    -o-transition: all 0.3s ease-in-out 0s;
+    transition: all 0.3s ease-in-out 0s;
 }
 
-h1{
+.title{
     margin: 0px;
     padding: 0px;
 }
 
 .comment{
-    margin: 0px;
+    margin: 20px;
     height: 0%;
     padding: 0px;
+    padding-top: 10px;
+    border-top: 1px solid gray;
     color: ThreeDDarkShadow;
     font-family: 'Droid Sans', sans-serif;
-    font-size: 10px;
+    font-size: 15px;
     display:hidden;
     overflow: hidden;
+
 }
 
 
 .roundabout-in-focus .comment{
-    margin: 0px;
+    margin-top: 20px;
     height: 15%;
-    padding: 0px;
+    border-top: 1px solid gray;
+    padding-top: 10px;
     color: ThreeDDarkShadow;
     font-family: 'Carrois Gothic', sans-serif;
-    font-size: 10px;
+    font-size: 15px;
+    overflow: auto;
     -webkit-transition: all 0s ease-in-out 0s; /* this is so all properties animate back to default */
     -moz-transition: all 0s ease-in-out 0s;
     -o-transition: all 0s ease-in-out 0s;

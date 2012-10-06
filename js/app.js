@@ -41,6 +41,8 @@ $(document).ready(function () {
 
     var needsInit = true;
     var isFirstComment = true;
+    var isSecondComment = true;
+    var isThirdComment = true;
 
     var subreddit = 'pics';
     var formed_url = createUrl(subreddit, "", "", DEFAULT_LIMIT);
@@ -137,6 +139,7 @@ $(document).ready(function () {
 
         $("#image" + loadIndex).attr("src", store.currentArray[store.prevIndex].data.url);
         $("#titleDiv" + loadIndex + " .title").html(store.currentArray[store.prevIndex].data.title);
+        $('#commentDiv' + loadIndex + " .topComment").html(store.currentArray[store.prevIndex].data.topComment);
     }
 
     function doOnNext(newFocus) {
@@ -171,6 +174,7 @@ $(document).ready(function () {
             }
             $("#image" + loadIndex).attr("src", store.nextArray[pseudoNextIndex].data.url);
             $("#titleDiv" + loadIndex + " .title").html(store.nextArray[pseudoNextIndex].data.title);
+            $('#commentDiv' + loadIndex + " .topComment").html(store.nextArray[pseudoNextIndex].data.topComment);
             return;
         }
 
@@ -182,7 +186,8 @@ $(document).ready(function () {
         }
         // console.dir(store.nextIndex);
         $("#image" + loadIndex).attr("src", store.currentArray[store.nextIndex].data.url);
-        $("#titleDiv" + loadIndex +" .title").html(store.currentArray[store.nextIndex].data.title);
+        $("#titleDiv" + loadIndex +" .title").html(store.currentArray[store.nextIndex].data.title)
+        $('#commentDiv' + loadIndex + " .topComment").html(store.currentArray[store.nextIndex].data.topComment);
     }
 
     function ajaxCall(formed_url, seekNext) {
@@ -222,6 +227,8 @@ $(document).ready(function () {
                 if (i < 3) {
                     $(item).find('.image').attr('src', store.currentArray[i].data.url);
                     $(item).find('.title').html(store.currentArray[i].data.title);
+                    $('#commentDiv' + i + " .topComment").html(store.currentArray[i].data.topComment);
+                    console.dir(store.currentArray[i].data.topComment)
                 }
             });
 
@@ -248,6 +255,14 @@ $(document).ready(function () {
                 if ((isFirstComment) && (itemIndex === 0)) {
                     isFirstComment = false;
                     $('#commentDiv' + 0 + " .topComment").html(store.currentArray[0].data.topComment);
+                }
+                if ((isSecondComment) && (itemIndex === 1)) {
+                    isSecondComment = false;
+                    $('#commentDiv' + 1 + " .topComment").html(store.currentArray[1].data.topComment);
+                }
+                if ((isThirdComment) && (itemIndex === 2)) {
+                    isThirdComment = false;
+                    $('#commentDiv' + 2 + " .topComment").html(store.currentArray[2].data.topComment);
                 }
             });
         }
