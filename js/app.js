@@ -43,6 +43,7 @@ $(document).ready(function (e) {
             if (subreddit == '')
                 subreddit = '/pics';
 
+            console.log(subreddit);
             doAll(subreddit);
 
             dialog.data.fadeOut('slow', function () {
@@ -233,12 +234,13 @@ $(document).ready(function (e) {
         }
 
         function ajaxCall(formed_url, seekNext) {
-
+            console.log(formed_url);
             $.ajax({
                 type:"GET",
                 url:formed_url,
                 dataType:"json",
                 success:function (data) {
+                    console.dir(data);
                     picsCallback(data, seekNext);
                 },
                 cache:false
@@ -248,8 +250,13 @@ $(document).ready(function (e) {
         function picsCallback(data, seekNext) {
 
             // this is exclusively the backend
+
+            console.dir(data);
+
             $.each(data.data.children, function (i, item) {
                 imageBuffer[i] = item;
+
+
 
                 if(needsInit){
                     purifyUrl(imageBuffer[i], i, true);
