@@ -30,12 +30,14 @@ $(document).ready(function (e) {
 
 
     $('#carousel').css('display', 'none');
+    $('#myCanvas1').css('display', 'none');
+
 
     $('#basic-modal-content').modal({
 
         close: false,
-        escClose : false,
-        overlayClose: false,
+        opacity: 70,
+
 
         onClose:function (dialog) {
 
@@ -47,10 +49,11 @@ $(document).ready(function (e) {
             doAll(subreddit);
 
             dialog.data.fadeOut('slow', function () {
-                dialog.container.slideUp('slow', function () {
+                dialog.container.slideUp('medium', function () {
                     dialog.overlay.fadeOut('slow', function () {
                         $.modal.close();
                         $('#carousel').css('display', '');
+                        $('#myCanvas1').css('display', '');
                     });
                 });
             });
@@ -65,7 +68,10 @@ $(document).ready(function (e) {
                 this.element[0].style.display = "";
             },
             'closeOnClick':true,
-            'autoScale':true
+            'autoScale':true,
+            'maxWidth': 1200,
+            'maxHeight': 800
+
         });
 
         var carousel;

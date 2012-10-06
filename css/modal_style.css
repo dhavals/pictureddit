@@ -5,49 +5,17 @@
 /* Overlay */
 #simplemodal-overlay {
     background-color: #000;
-    cursor: wait;
+    cursor: auto;
 }
 
 /* Container */
 #simplemodal-container {
-    height: 360px;
-    width: 600px;
+    height: 160px;
+    width: 350px;
     color: #bbb;
-    background-color: #333;
-    border: 4px solid #444;
+    background: url('../assets/images/monkey-bg-normal.jpg') repeat center;
     padding: 12px;
-}
+    border-radius: 30px;
 
-#simplemodal-container .simplemodal-data {
-    padding: 8px;
-}
-
-#simplemodal-container code {
-    background: #141414;
-    border-left: 3px solid #65B43D;
-    color: #bbb;
-    display: block;
-    font-size: 12px;
-    margin-bottom: 12px;
-    padding: 4px 6px 6px;
-}
-
-#simplemodal-container a {
-    color: #ddd;
-}
-
-#simplemodal-container a.modalCloseImg {
-    background: url(../assets/images/x.png) no-repeat;
-    width: 25px;
-    height: 29px;
-    display: inline;
-    z-index: 3200;
-    position: absolute;
-    top: -15px;
-    right: -16px;
-    cursor: pointer;
-}
-
-#simplemodal-container h3 {
-    color: #84b8d9;
+    text-align: center;
 }
