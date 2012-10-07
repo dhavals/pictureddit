@@ -197,6 +197,7 @@ $(document).ready(function (e) {
             $("#image" + loadIndex).attr("src", store.currentArray[store.prevIndex].data.url);
             $("#titleDiv" + loadIndex + " .title").html(store.currentArray[store.prevIndex].data.title);
             $('#commentDiv' + loadIndex + " .topComment").html(store.currentArray[store.prevIndex].data.topComment);
+            $("#commentLink" + loadIndex).attr("href", 'http://www.reddit.com' + store.currentArray[store.prevIndex].data.permalink);
         }
 
         function doOnNext(newFocus) {
@@ -231,6 +232,7 @@ $(document).ready(function (e) {
                 }
                 $('#commentDiv' + loadIndex + " .topComment").html("");
                 $("#image" + loadIndex).attr("src", store.nextArray[pseudoNextIndex].data.url);
+                $("#commentLink" + loadIndex).attr("href", 'http://www.reddit.com' + store.nextArray[pseudoNextIndex].data.permalink);
                 $("#titleDiv" + loadIndex + " .title").html(store.nextArray[pseudoNextIndex].data.title);
                 $('#commentDiv' + loadIndex + " .topComment").html(store.nextArray[pseudoNextIndex].data.topComment);
                 return;
@@ -247,6 +249,7 @@ $(document).ready(function (e) {
             $("#image" + loadIndex).attr("src", store.currentArray[store.nextIndex].data.url);
             $("#titleDiv" + loadIndex + " .title").html(store.currentArray[store.nextIndex].data.title)
             $('#commentDiv' + loadIndex + " .topComment").html(store.currentArray[store.nextIndex].data.topComment);
+            $("#commentLink" + loadIndex).attr("href", 'http://www.reddit.com' + store.currentArray[store.nextIndex].data.permalink);
         }
 
         function ajaxCall(formed_url, seekNext) {
@@ -294,6 +297,7 @@ $(document).ready(function (e) {
                     if (i < 3) {
                         $(item).find('.image').attr('src', store.currentArray[i].data.url);
                         $(item).find('.title').html(store.currentArray[i].data.title);
+                        $("#commentLink" + i).attr("href", 'http://www.reddit.com' + store.currentArray[i].data.permalink);
                         $('#commentDiv' + i + " .topComment").html(store.currentArray[i].data.topComment);
                     }
                 });
