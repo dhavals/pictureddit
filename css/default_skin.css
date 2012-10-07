@@ -1,3 +1,9 @@
+/**
+ * 15-237 Unit Project
+ * Nidhi Doshi (npdoshi)
+ * Dhaval Shah (dhavals)
+ */
+
 body {
     background: url('../assets/images/monkey-bg-normal.jpg')repeat center;
     color: #eee;
@@ -8,13 +14,3 @@ body {
     box-shadow: 0 0 3px 3px #c9c2b0;
     -webkit-box-shadow: 0 0 2px 2px #c9c2b0;
 }
-
-.imgContainer{
-
-}
-
-.image{
-}
-
-
-

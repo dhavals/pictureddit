@@ -1,9 +1,7 @@
 /**
- * Created with JetBrains WebStorm.
- * User: Dhaval
- * Date: 9/28/12
- * Time: 8:17 PM
- * To change this template use File | Settings | File Templates.
+ * 15-237 Unit Project
+ * Nidhi Doshi (npdoshi)
+ * Dhaval Shah (dhavals)
  */
 
 var DEFAULT_URL = 'assets/images/redditBroke.png';

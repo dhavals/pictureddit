@@ -1,0 +1,47 @@
+15-237 Unit Project
+
+Dhaval Shah (dhavals)
+Nidhi Doshi (npdoshi)
+
+
+Required Elements
+Javascript:
+We have an ImageStore object that stores state, essentially our entire back-end structure.
+We are using 3 arrays, a prev, current, and next array, for pre-loading images so our ajax calls don't slow the user down.
+
+Canvas
+The logo for the project is made using a canvas, and this is also re-implemented in the modal window, as another canvas.
+This makes it not-copyable :) Please see canvas.js for code.
+
+HTML:
+Lots, everywhere. We are using a JQuery plugin called Roundabout, for which, in our html, we have a div, with separate divs,
+where each div represents one "slide", that moves around in the carousel. A lot of this basic structure is defined in HTML.
+Also, we have a modal form done in HTMl, with a select drop down menu for selecting the subreddit.
+
+CSS:
+Using hover and active pseudoclasses for a button, also using css to display the modal well, etc.
+Files to see:
+own_style.css
+modal_style.css
+default_skin.css
+
+DOM manipulation:
+We are using extensive dom manipulation to insert comments, titles, images dynamically into the carousel.
+It makes our project go round -- literally.
+
+AJAX and/or JSON-P client:
+Making JSONP request to reddit API for list of images from subreddit.
+Take this list, and per-image, if this image is not display-able, and for imgur, make AJAX call to imgur
+to get a display-able image URL.
+Making another AJAX call to reddit, given image, to get the top comment.
+Please look in app.js doAll() function.
+
+jQuery:
+Using Jquery to make the ajax calls and perform dom manipulation, detecting Firefox or not, etc.
+
+CODE THAT'S NOT OURS:
+fancybox
+jquery.roundabout.min.js
+jquery.simplemodal.js
+own_style.css 213-228 lines.
+Most of the images aren't ours either -- if you want more details regarding them, please let us know.

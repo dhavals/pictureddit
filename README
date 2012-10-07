@@ -1,1 +1,40 @@
-This file was created by JetBrains WebStorm 5.0.1 for binding GitHub repository
+15-237 Unit Project
+
+Dhaval Shah (dhavals)
+Nidhi Doshi (npdoshi)
+
+Overview:
+pictureddit is a reddit image viewer. The user can specify a subreddit from a list, and browse through images
+in that subreddit. It displays the image, along with the reddit title, and the top comment. Upon hovering over
+the image in focus, the user can click on the comments icon to be taken to the main reddit page. The user can
+also click on the image itself, and have it show up in a larger lightbox, making it really nice to view.
+Once bored, the user can click on Change Subreddit and change it to something else.
+
+Browser support:
+This definitely does not work on Internet Explorer. We are rather pleased with that.
+On a more serious note, this works perfectly on Firefox, and almost perfectly on Chrome -- except that the layout
+sometimes breaks down on Chrome, because of the modal plugin we are using.
+
+Explanation of the backend:
+To make the experience smooth and wait-less for the user, we have implemented preloading of images.
+Our carousel has five divs with images in them, but only two are not visible -- they are the ones
+where we are preloading the images.
+We are using three arrays to accomplish preloading of ajax objects. Prev, current and next.
+At any point in time, we at least have the current and next arrays populated. When the user runs out of
+the current array, then, we transfer him over to an already available "old next, now current" array,
+and start loading more images that will be in the new next array.
+
+Front end details:
+To use the carousel, you can click on the right pane to go forward and see more images,
+and if you wish, click on the left pane (after having cliked on the right one for a while), and it will go
+to the previous images all the way to the front.
+
+Hovering over an image in focus will create a comment link you can click on to go and view all reddit comments.
+This will open in a new tab. :)
+
+If you cannot see an image too clearly, click on it, and it will open up in a nice lightbox, so you can view it
+enhanced.
+
+Also, if the reddit post actually does not include an image type we support (such as a link only to a web page),
+then you should not be seeing these in most cases. If you do, however, you will see a cute "broke reddit" image.
+

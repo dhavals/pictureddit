@@ -1,9 +1,7 @@
 /**
- * Created with JetBrains WebStorm.
- * User: npdoshi
- * Date: 10/6/12
- * Time: 4:20 AM
- * To change this template use File | Settings | File Templates.
+ * 15-237 Unit Project
+ * Nidhi Doshi (npdoshi)
+ * Dhaval Shah (dhavals)
  */
 $(document).ready(function (e) {
 
