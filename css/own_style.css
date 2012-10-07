@@ -270,3 +270,15 @@ h2{
     display: block;
 }
 
+
+#nonFirefox{
+    color: #000000;
+    font: "Droid Sans";
+    font-size: 30px;
+    height: 20px;
+    width: 1000px;
+    position: relative;
+    text-align: center;
+    margin-top: 520px;
+    margin-left: 305px;
+}

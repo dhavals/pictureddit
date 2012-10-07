@@ -24,9 +24,10 @@ $(document).ready(function (e) {
 
     var subreddit;
 
-    if ($.browser.mozilla){
-
+    if (!($.browser.mozilla)){
+        $('#nonFirefox').html("For best results, use Firefox instead.");
     }
+
 
 
     $('#carousel').css('display', 'none');
@@ -53,12 +54,14 @@ $(document).ready(function (e) {
             doAll(subreddit);
 
             dialog.data.fadeOut('slow', function () {
+                $('#nonFirefox').css('display', 'none');
                 dialog.container.slideUp('medium', function () {
                     dialog.overlay.fadeOut('slow', function () {
                         $.modal.close();
                         $('#carousel').css('display', '');
                         $('#myCanvas1').css('display', '');
                         $('#submitButton2').css('display', '');
+
                     });
                 });
             });
