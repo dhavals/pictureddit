@@ -279,13 +279,11 @@ h2{
 
 
 #nonFirefox{
-    color: #000000;
+    color: #404040;
     font: "Droid Sans";
-    font-size: 30px;
-    height: 20px;
-    width: 1000px;
+    font-size: 40px;
     position: relative;
     text-align: center;
-    margin-top: 520px;
-    margin-left: 305px;
+    margin: 0 auto;
+    padding: 50px;
 }
